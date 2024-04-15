@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: GameService
+server:
+  port: 8085
+scheduler:
+  cron:
+    retrieve:
+      expression: "0/60 * * * * ?"
+    clean:
+      expression: "0/70 * * * * ?"
+      days: 30
