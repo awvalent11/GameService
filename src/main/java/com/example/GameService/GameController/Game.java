@@ -23,9 +23,11 @@ public class Game {
     private String home;
     private String away;
     private Double odds;
-    private LocalDate expiration;
+    private LocalDate startTime;
     private Double moneyLine;
     private Double payoff;
     private Double position;
     private Boolean status;
+    //True means game is over, false means game is not
+
 }

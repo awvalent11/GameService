@@ -3,19 +3,14 @@ package com.example.GameService.GameController;
 
 import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @NoArgsConstructor
@@ -45,10 +40,10 @@ public class GameController {
     }
 
     @GetMapping("/mlb-schedule")
-    public Object getMLBSchedule(){
+    public ArrayList getMLBSchedule(){
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Object> responseEntity = restTemplate.getForEntity(MLBSCHEDULEUSEABLE, Object.class);
-        return List.of(Objects.requireNonNull(responseEntity.getBody()));
+        ResponseEntity<ArrayList> responseEntity = restTemplate.getForEntity(MLBSCHEDULEUSEABLE, ArrayList.class);
+        return Objects.requireNonNull(responseEntity.getBody());
     }
 
 
