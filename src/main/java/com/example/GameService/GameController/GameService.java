@@ -1,9 +1,7 @@
 package com.example.GameService.GameController;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -21,22 +18,43 @@ public class GameService {
 
     private final GameController gameController;
 
+    public static List<Game> todaysGames = new ArrayList<>();
+
     Logger logger;
 
     public GameService(GameController gameController) {
         this.gameController = gameController;
     }
 
+    private static void assignGames(List<Game> games){
+        //Should return a List<Game>
+        todaysGames.addAll(games);
+    }
 
-    public void filterGame(GameDTO game){
-//        Game returnedGame = Game.builder().build();
-//
-//        returnedGame.setHome(game.getHome());
-//        returnedGame.setAway(game.getAway());
-//        returnedGame.setOdds(game.getOdds());
-//        returnedGame.setStartTime(game.getDateTime());
-//
-//        return returnedGame;
+
+    public Game convertGame(GameDTO game){
+        Game returnedGame = new Game();
+
+        for(LinkedHashMap odds: game.getPregameOdds()){
+            try {
+                System.out.println("SportsbookUrl:");
+                System.out.println(odds.get("SportsbookUrl"));
+                returnedGame.setHome(game.getHomeTeamName());
+                returnedGame.setAway(game.getAwayTeamName());
+                Odds pregameOdds = new Odds( (Double) odds.get("HomePointSpread"),
+                        (Double) odds.get("OverUnder"),
+                        (Integer) odds.get("HomeMoneyLine"),
+                        (String) odds.get("SportsbookUrl"));
+                returnedGame.getOdds().add(pregameOdds);
+//                System.out.println(String.format("I am pregame odds: %s", odds.get("")));
+
+            }catch (Error err){
+                logger.info(err.toString());
+            }
+        }
+
+
+        return returnedGame;
     }
 
     private Boolean parseStatus(String aPistatus) {
@@ -46,22 +64,15 @@ public class GameService {
     }
 
     private List<GameDTO> parseGame(ArrayList<LinkedHashMap> games) throws NullPointerException {
-        ObjectMapper objectMapper = new ObjectMapper();
-//        JsonNode jsonNode = objectMapper.readTree(String.valueOf(games));
         List<GameDTO> gameList = new ArrayList<>();
-//        String gamesAsString = objectMapper.writeValueAsString(games);
-//        gamesAsString.replace("=", ":");
-//        gamesAsString = gamesAsString.replace("[", "");
-//        String[] gameDTOList = gamesAsString.split("]},");
-//        ArrayList<String> gameDTOArrayList = new ArrayList<>(List.of(gameDTOList));
-//        System.out.println(gameDTOArrayList);
         for(LinkedHashMap game : games) {
             try {
-//                GameDTO gameDTO = objectMapper.readValue(objectMapper.writeValueAsString(game), GameDTO.class);
+                System.out.println(String.format("I am a game! %s", game));
                 GameDTO gameDTO = GameDTO.builder().build();
                 gameDTO.setGameId((Integer) game.get("GameId"));
                 gameDTO.setAwayTeamName((String) game.get("AwayTeamName"));
                 gameDTO.setHomeTeamName((String) game.get("HomeTeamName"));
+                gameDTO.setPregameOdds((List<LinkedHashMap>) game.get("PregameOdds"));
                 gameList.add(gameDTO);
 
 
@@ -98,6 +109,12 @@ public class GameService {
         System.out.println(todayGames.get(0).getHomeTeamName());
         System.out.println(todayGames.get(2).getGameId());
         System.out.println(todayGames.get(2).getHomeTeamName());
+        List<Game> convertedGames = new ArrayList<>();
+        for(GameDTO game: todayGames){
+            Game convertedGame = convertGame(game);
+            convertedGames.add(convertedGame);
+        }
+        GameService.assignGames(convertedGames);
 
         //"GlobalGameId": 10070978 -> Can we use that bad boy to zip together odds?
 

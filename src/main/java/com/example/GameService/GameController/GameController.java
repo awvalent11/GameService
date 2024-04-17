@@ -46,6 +46,11 @@ public class GameController {
         return Objects.requireNonNull(responseEntity.getBody());
     }
 
+    @GetMapping("/mlb-today-games")
+    public List<Game> getMLBTodayGames(){
+        return GameService.todaysGames;
+    }
+
 
 
     @GetMapping("/hey")

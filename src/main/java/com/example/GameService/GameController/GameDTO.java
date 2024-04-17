@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +48,7 @@ public class GameDTO {
 //    private String totalScore;
 //    private String homeRotationNumber;
 //    private String AwayRotationNumber;
-//    private List<Object> pregameOdds;
+    private List<LinkedHashMap> pregameOdds;
 
 
     private String getSportsBook(String url) {
