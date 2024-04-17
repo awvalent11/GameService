@@ -50,20 +50,4 @@ public class GameDTO {
 //    private String AwayRotationNumber;
     private List<LinkedHashMap> pregameOdds;
 
-
-    private String getSportsBook(String url) {
-//        Pattern pattern = Pattern.compile(url, Pattern.CASE_INSENSITIVE);
-//        Matcher matcher = pattern.matcher(url);
-//        switch(){
-//
-//
-//        }
-//        Matcher draftkings = pattern.matcher("Visit W3Schools!");
-//        Matcher fanduel
-//                playsugarhouse
-//                betrivers
-//                caesars
-//                betmgm
-         return "Howdy :)";
-    }
 }
