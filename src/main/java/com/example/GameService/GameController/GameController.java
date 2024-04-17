@@ -40,7 +40,7 @@ public class GameController {
     }
 
     @GetMapping("/mlb-schedule")
-    public ArrayList getMLBSchedule(){
+    public ArrayList<LinkedHashMap> getMLBSchedule(){
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ArrayList> responseEntity = restTemplate.getForEntity(MLBSCHEDULEUSEABLE, ArrayList.class);
         return Objects.requireNonNull(responseEntity.getBody());

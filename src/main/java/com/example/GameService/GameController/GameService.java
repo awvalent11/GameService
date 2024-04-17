@@ -3,6 +3,7 @@ package com.example.GameService.GameController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
@@ -12,6 +13,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -26,15 +28,15 @@ public class GameService {
     }
 
 
-    public Game filterGame(GameDTO game){
-        Game returnedGame = Game.builder().build();
+    public void filterGame(GameDTO game){
+//        Game returnedGame = Game.builder().build();
 //
-        returnedGame.setHome(game.getHome());
-        returnedGame.setAway(game.getAway());
-        returnedGame.setOdds(game.getOdds());
-        returnedGame.setStartTime(game.getDateTime());
-
-        return returnedGame;
+//        returnedGame.setHome(game.getHome());
+//        returnedGame.setAway(game.getAway());
+//        returnedGame.setOdds(game.getOdds());
+//        returnedGame.setStartTime(game.getDateTime());
+//
+//        return returnedGame;
     }
 
     private Boolean parseStatus(String aPistatus) {
@@ -43,18 +45,26 @@ public class GameService {
         } else return false;
     }
 
-    private List<Game> parseGame(ArrayList games) throws JsonProcessingException {
+    private List<GameDTO> parseGame(ArrayList<LinkedHashMap> games) throws NullPointerException {
         ObjectMapper objectMapper = new ObjectMapper();
 //        JsonNode jsonNode = objectMapper.readTree(String.valueOf(games));
-        List<Game> gameList = new ArrayList<>();
-        String gamesAsString = objectMapper.writeValueAsString(games);
-        gamesAsString.replace("=", ":");
-        String[] gameDTOList = gamesAsString.split("]}");
-        ArrayList<String> gameDTOArrayList = new ArrayList<>(List.of(gameDTOList));
-        System.out.println(gameDTOArrayList);
-        for(String game : gameDTOArrayList) {
+        List<GameDTO> gameList = new ArrayList<>();
+//        String gamesAsString = objectMapper.writeValueAsString(games);
+//        gamesAsString.replace("=", ":");
+//        gamesAsString = gamesAsString.replace("[", "");
+//        String[] gameDTOList = gamesAsString.split("]},");
+//        ArrayList<String> gameDTOArrayList = new ArrayList<>(List.of(gameDTOList));
+//        System.out.println(gameDTOArrayList);
+        for(LinkedHashMap game : games) {
             try {
-                System.out.println(String.format("I am a game: %s", game));
+//                GameDTO gameDTO = objectMapper.readValue(objectMapper.writeValueAsString(game), GameDTO.class);
+                GameDTO gameDTO = GameDTO.builder().build();
+                gameDTO.setGameId((Integer) game.get("GameId"));
+                gameDTO.setAwayTeamName((String) game.get("AwayTeamName"));
+                gameDTO.setHomeTeamName((String) game.get("HomeTeamName"));
+                gameList.add(gameDTO);
+
+
             }catch (Error err){
                 logger.info(err.toString());
             }
@@ -83,8 +93,12 @@ public class GameService {
 
         ArrayList mlbSchedule = gameController.getMLBSchedule();
 //        System.out.println(mlbSchedule);
-        List<Game> todayGames = parseGame(mlbSchedule);
-        System.out.println(todayGames);
+        List<GameDTO> todayGames = parseGame(mlbSchedule);
+        System.out.println(todayGames.get(0).getGameId());
+        System.out.println(todayGames.get(0).getHomeTeamName());
+        System.out.println(todayGames.get(2).getGameId());
+        System.out.println(todayGames.get(2).getHomeTeamName());
+
         //"GlobalGameId": 10070978 -> Can we use that bad boy to zip together odds?
 
 
