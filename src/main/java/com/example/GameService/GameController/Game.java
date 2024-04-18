@@ -27,7 +27,7 @@ public class Game {
    // private LocalDate startTime;
    // private Double payoff;
    // private Double position;
-   // private Boolean status;
+    private Boolean status;
     //True means game is over, false means game is not
     public Game(){
         this.odds = new ArrayList<>();

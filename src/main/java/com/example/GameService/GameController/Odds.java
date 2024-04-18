@@ -12,7 +12,10 @@ public class Odds {
     private Integer moneyLine;
     private String sportsbookUrl;
 
-    public Odds(Double pointsSpread, Double overUnder, Integer moneyLine, String sportsbookUrl) {
+    public Odds(Double pointsSpread,
+                Double overUnder,
+                Integer moneyLine,
+                String sportsbookUrl) {
         this.pointsSpread = pointsSpread;
         this.overUnder = overUnder;
         this.moneyLine = moneyLine;

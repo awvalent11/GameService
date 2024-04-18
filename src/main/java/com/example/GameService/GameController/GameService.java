@@ -37,17 +37,17 @@ public class GameService {
 
         for(LinkedHashMap odds: game.getPregameOdds()){
             try {
-                System.out.println("SportsbookUrl:");
-                System.out.println(odds.get("SportsbookUrl"));
                 returnedGame.setHome(game.getHomeTeamName());
                 returnedGame.setAway(game.getAwayTeamName());
+                Boolean gameStatus = parseStatus(game.getStatus());
+                returnedGame.setStatus(gameStatus);
                 Odds pregameOdds = new Odds( (Double) odds.get("HomePointSpread"),
                         (Double) odds.get("OverUnder"),
                         (Integer) odds.get("HomeMoneyLine"),
                         (String) odds.get("SportsbookUrl"));
-                returnedGame.getOdds().add(pregameOdds);
-//                System.out.println(String.format("I am pregame odds: %s", odds.get("")));
-
+                if(pregameOdds.getSportsbookUrl()!= null){
+                    returnedGame.getOdds().add(pregameOdds);
+                }
             }catch (Error err){
                 logger.info(err.toString());
             }
@@ -72,6 +72,7 @@ public class GameService {
                 gameDTO.setGameId((Integer) game.get("GameId"));
                 gameDTO.setAwayTeamName((String) game.get("AwayTeamName"));
                 gameDTO.setHomeTeamName((String) game.get("HomeTeamName"));
+                gameDTO.setStatus((String) game.get("Status"));
                 gameDTO.setPregameOdds((List<LinkedHashMap>) game.get("PregameOdds"));
                 gameList.add(gameDTO);
 
@@ -103,12 +104,7 @@ public class GameService {
     public void getGamesSpecificWeek(){
 
         ArrayList mlbSchedule = gameController.getMLBSchedule();
-//        System.out.println(mlbSchedule);
         List<GameDTO> todayGames = parseGame(mlbSchedule);
-        System.out.println(todayGames.get(0).getGameId());
-        System.out.println(todayGames.get(0).getHomeTeamName());
-        System.out.println(todayGames.get(2).getGameId());
-        System.out.println(todayGames.get(2).getHomeTeamName());
         List<Game> convertedGames = new ArrayList<>();
         for(GameDTO game: todayGames){
             Game convertedGame = convertGame(game);
