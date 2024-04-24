@@ -9,16 +9,19 @@ import lombok.*;
 public class Odds {
     private Double pointsSpread;
     private Double overUnder;
-    private Integer moneyLine;
+    private Integer homeMoneyLine;
+    private Integer awayMoneyLine;
     private String sportsbookUrl;
 
     public Odds(Double pointsSpread,
                 Double overUnder,
-                Integer moneyLine,
+                Integer homeMoneyLine,
+                Integer awayMoneyLine,
                 String sportsbookUrl) {
         this.pointsSpread = pointsSpread;
         this.overUnder = overUnder;
-        this.moneyLine = moneyLine;
+        this.homeMoneyLine = homeMoneyLine;
+        this.awayMoneyLine = awayMoneyLine;
         this.sportsbookUrl = sportsbookUrl;
         this.sportsBook = getSportsBook(sportsbookUrl);
     }

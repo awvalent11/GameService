@@ -44,6 +44,7 @@ public class GameService {
                 Odds pregameOdds = new Odds( (Double) odds.get("HomePointSpread"),
                         (Double) odds.get("OverUnder"),
                         (Integer) odds.get("HomeMoneyLine"),
+                        (Integer) odds.get("AwayMoneyLine"),
                         (String) odds.get("SportsbookUrl"));
                 if(pregameOdds.getSportsbookUrl()!= null){
                     returnedGame.getOdds().add(pregameOdds);
@@ -58,9 +59,7 @@ public class GameService {
     }
 
     private Boolean parseStatus(String aPistatus) {
-        if(aPistatus.equals("Final")) {
-            return true;
-        } else return false;
+        return aPistatus.equals("Final");
     }
 
     private List<GameDTO> parseGame(ArrayList<LinkedHashMap> games) throws NullPointerException {
@@ -82,20 +81,6 @@ public class GameService {
             }
         }
         return gameList;
-//        for(Map.Entry<String, String> entry : games.entrySet())
-//        List<GameDTO> gameDTOS = (List<GameDTO>) games;
-//        for(GameDTO gameDTO : gameDTOS){
-//            Game game = Game.builder()
-//                    .away(gameDTO.getAwayTeamName())
-//                    .home(gameDTO.getHomeTeamName())
-//                    .startTime(gameDTO.getDateTime())
-//                    .status(parseStatus(gameDTO.getStatus()))
-//                    .build();
-//            gameList.add(game);
-//        }
-//        return objectMapper.readValue(games);
-//        return gamesAsString;
-
     }
 
     @SneakyThrows

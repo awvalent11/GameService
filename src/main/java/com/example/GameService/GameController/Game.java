@@ -28,6 +28,7 @@ public class Game {
    // private Double payoff;
    // private Double position;
     private Boolean status;
+    // Scheduled, InProgress,
     //True means game is over, false means game is not
     public Game(){
         this.odds = new ArrayList<>();
