@@ -2,6 +2,7 @@ package com.example.GameService.GameController;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
@@ -84,7 +85,10 @@ public class GameService {
     }
 
     @SneakyThrows
-    @Scheduled(fixedRate = 100000)
+    @PostConstruct
+    @Scheduled(cron = "0 38 16 * * ?")
+    //4:38PM everyday
+    // * is everytime and 0 is once
     @Transactional
     public void getGamesSpecificWeek(){
 
