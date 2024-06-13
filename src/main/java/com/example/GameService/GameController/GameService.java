@@ -87,8 +87,8 @@ public class GameService {
     @SneakyThrows
     @PostConstruct
     @Scheduled(cron = "0 38 16 * * ?")
-    //4:38PM everyday
-    // * is everytime and 0 is once
+    //4:38PM every day
+    // * is every time and 0 is once
     @Transactional
     public void getGamesSpecificWeek(){
 

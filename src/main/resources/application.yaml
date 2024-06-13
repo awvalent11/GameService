@@ -2,7 +2,7 @@ spring:
   application:
     name: GameService
 server:
-  port: 8085
+  port: 80
 scheduler:
   cron:
     retrieve:
