@@ -23,9 +23,6 @@ public class NFLService {
         this.gameController = gameController;
     }
 
-    public List<Object> checkGamesInProgress(){
-        return this.gameController.getNFLGameProgress();
-    }
 //
 //    private static void assignGames(List<Game> games){
 //        //Should return a List<Game>

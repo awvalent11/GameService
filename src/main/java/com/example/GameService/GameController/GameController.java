@@ -26,27 +26,13 @@ public class GameController {
 //            "results while the game is in progress."
 
 
-    String NFLGAMESINPROGRESS = "https://api.sportsdata.io/v3/nfl/scores/json/AreAnyGamesInProgress?key=a8798167747e4ea49679b2b92c522c6c";
+    String NFLGAMESINPROGRESS = "https://api.sportsdata.io/v3/nfl/scores/json/AreAnyGamesInProgress?key=a1c6821b242546c180c07e0d1e508670";
     String NFLODDSWEEK1 = "https://api.sportsdata.io/v3/nfl/odds/json/GameOddsByWeek/2024/1?key=a1c6821b242546c180c07e0d1e508670";
 
     String MLBSCHEDULE = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/2024-04-16?key=a8798167747e4ea49679b2b92c522c6c";
     String MLBSCHEDULEUSEABLE = String.format("https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/%s?key=a8798167747e4ea49679b2b92c522c6c", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
 
-
-    @GetMapping("gambling-api/all-bets")
-    public Game[] getAllBets(){
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Game[]> responseEntity = restTemplate.getForEntity(nflAPI, Game[].class);
-        return responseEntity.getBody();
-    }
-
-    @GetMapping("gambling-api/odds")
-    public List<GameDTO> getOdds(){
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<GameDTO[]> responseEntity = restTemplate.getForEntity(nflOdds, GameDTO[].class);
-        return List.of(Objects.requireNonNull(responseEntity.getBody()));
-    }
 
     @GetMapping("gambling-api/mlb-schedule")
     public ArrayList<LinkedHashMap> getMLBSchedule(){
@@ -76,17 +62,10 @@ public class GameController {
 
     @CrossOrigin
     @GetMapping("gambling-api/nfl-games-progress")
-    public List<Object> getNFLGameProgress(){
+    public Object getNFLGameProgress(){
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ArrayList> responseEntity = restTemplate.getForEntity(NFLGAMESINPROGRESS, ArrayList.class);
+        ResponseEntity<Object> responseEntity = restTemplate.getForEntity(NFLGAMESINPROGRESS, Object.class);
         return Objects.requireNonNull(responseEntity.getBody());
-    }
-
-
-
-    @GetMapping()
-    public String hey(){
-        return "Hey :)";
     }
 
     @GetMapping("health")
