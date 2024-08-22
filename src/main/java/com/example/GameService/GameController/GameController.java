@@ -41,6 +41,7 @@ public class GameController {
         return Objects.requireNonNull(responseEntity.getBody());
     }
 
+    @CrossOrigin
     @GetMapping("gambling-api/nfl-schedule")
     public ArrayList<LinkedHashMap> getNFLSchedule(){
         RestTemplate restTemplate = new RestTemplate();
@@ -62,9 +63,9 @@ public class GameController {
 
     @CrossOrigin
     @GetMapping("gambling-api/nfl-games-progress")
-    public Object getNFLGameProgress(){
+    public Boolean getNFLGameProgress(){
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Object> responseEntity = restTemplate.getForEntity(NFLGAMESINPROGRESS, Object.class);
+        ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(NFLGAMESINPROGRESS, Boolean.class);
         return Objects.requireNonNull(responseEntity.getBody());
     }
 

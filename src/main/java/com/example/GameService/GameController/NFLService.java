@@ -6,88 +6,66 @@ import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
-
+import org.slf4j.Logger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class NFLService {
 
     private final GameController gameController;
-//
-//    public static List<Game> todaysGames = new ArrayList<>();
-//
-//    Logger logger;
-//
     public NFLService(GameController gameController) {
         this.gameController = gameController;
     }
 
-//
-//    private static void assignGames(List<Game> games){
-//        //Should return a List<Game>
-//        todaysGames.addAll(games);
-//    }
-//
-//
-//    public Game convertGame(GameDTO game){
-//        Game returnedGame = new Game();
-//
-//        for(LinkedHashMap odds: game.getPregameOdds()){
-//            try {
-//                returnedGame.setHome(game.getHomeTeamName());
-//                returnedGame.setAway(game.getAwayTeamName());
-//                Boolean gameStatus = parseStatus(game.getStatus());
-//                returnedGame.setStatus(gameStatus);
-//                Odds pregameOdds = new Odds( (Double) odds.get("HomePointSpread"),
-//                        (Double) odds.get("OverUnder"),
-//                        (Integer) odds.get("HomeMoneyLine"),
-//                        (Integer) odds.get("AwayMoneyLine"),
-//                        (String) odds.get("SportsbookUrl"));
-//                if(pregameOdds.getSportsbookUrl()!= null){
-//                    returnedGame.getOdds().add(pregameOdds);
-//                }
-//            }catch (Error err){
-//                logger.info(err.toString());
-//            }
-//        }
-//
-//
-//        return returnedGame;
-//    }
-//
-//    private Boolean parseStatus(String aPistatus) {
-//        return aPistatus.equals("Final");
-//    }
-//
-//    private List<GameDTO> parseGame(ArrayList<LinkedHashMap> games) throws NullPointerException {
-//        List<GameDTO> gameList = new ArrayList<>();
-//        for(LinkedHashMap game : games) {
-//            try {
-//                System.out.println(String.format("I am a game! %s", game));
-//                GameDTO gameDTO = GameDTO.builder().build();
-//                gameDTO.setGameId((Integer) game.get("GameId"));
-//                gameDTO.setAwayTeamName((String) game.get("AwayTeamName"));
-//                gameDTO.setHomeTeamName((String) game.get("HomeTeamName"));
-//                gameDTO.setStatus((String) game.get("Status"));
-//                gameDTO.setPregameOdds((List<LinkedHashMap>) game.get("PregameOdds"));
-//                gameList.add(gameDTO);
-//
-//
-//            }catch (Error err){
-//                logger.info(err.toString());
-//            }
-//        }
-//        return gameList;
-//    }
-//
+    Logger logger;
+
+    List<String> sportbooks = Arrays.asList("FanDuel", "Caesars", "Bet365",
+            "Fanatics", "DraftKings", "Betrivers",
+            "BetMGM", "Betway", "ClutchBet", "Desert Diamond");
+
+    public void findGamesUsages(Profile[] profiles, Game[] gameList){
+//        find games that are used in bets
+//        check if games have resolved
+//        if they have, settle the bets
+    }
+
+    public void getLiveOdds(List<Integer> scoreIds, List<String> sportbooks){
+
+        for (Integer scoreId : scoreIds) {
+            // check if any customers are betting or following that game
+            for (String sportbook : sportbooks) {
+                String liveOddsPerGame = String.format("https://api.sportsdata.io/v3/nfl/odds/json/InGameLineMovementWithResulting/%s/%s", scoreId, sportbook);
+
+                //send live bet line data message in broker
+            }
+        }
+    }
+
+    @SneakyThrows
+    @PostConstruct
+    //@Scheduled(cron = "0 */15 * * * ?")
+    //4:38PM every day
+    // * is every time and 0 is once
+    @Transactional
+    public void updateLiveOdds(){
+        Boolean gamesInProgress = gameController.getNFLGameProgress();
+        if(gamesInProgress){
+            List<Integer> gameIds = new ArrayList<>();
+            List<LinkedHashMap> nflWeekGames = gameController.getNFLSchedule();
+            for (LinkedHashMap nflWeekGame : nflWeekGames) {
+                try{
+                    gameIds.add((Integer) nflWeekGame.get("GameId"));
+                } catch (Exception e){
+                    logger.info(e.toString());
+                }
+            getLiveOdds(gameIds, sportbooks);
+            }
+        }
+    }
 
 
-//    public void findGamesUsages(Profile[] profiles, Game[] gameList){
-        //find games that are used in bets
-        //check if games have resolved
-        //if they have, settle the bets
-//    }
 
     //sends message to kafka producer
 }
