@@ -20,6 +20,7 @@ public class GameService {
     private final GameController gameController;
 
     public static List<Game> todaysGames = new ArrayList<>();
+    public static List<Game> weeksNFLGames = new ArrayList<>();
 
     Logger logger;
 
@@ -30,6 +31,11 @@ public class GameService {
     private static void assignGames(List<Game> games){
         //Should return a List<Game>
         todaysGames.addAll(games);
+    }
+
+    private static void assignNFLGames(List<Game> games){
+        //Should return a List<Game>
+        weeksNFLGames.addAll(games);
     }
 
 
@@ -100,6 +106,28 @@ public class GameService {
             convertedGames.add(convertedGame);
         }
         GameService.assignGames(convertedGames);
+
+        //"GlobalGameId": 10070978 -> Can we use that bad boy to zip together odds?
+
+
+    }
+
+    @SneakyThrows
+    @PostConstruct
+    @Scheduled(cron = "0 35 16 * * ?")
+    //4:38PM every day
+    // * is every time and 0 is once
+    @Transactional
+    public void getNFLGamesForWeek(){
+
+        ArrayList nflSchedule = gameController.getNFLSchedule();
+        List<GameDTO> nflWeekGames = parseGame(nflSchedule);
+        List<Game> convertedGames = new ArrayList<>();
+        for(GameDTO game: nflWeekGames){
+            Game convertedGame = convertGame(game);
+            convertedGames.add(convertedGame);
+        }
+        GameService.assignNFLGames(convertedGames);
 
         //"GlobalGameId": 10070978 -> Can we use that bad boy to zip together odds?
 
