@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @RestController
@@ -27,13 +28,25 @@ public class GameController {
 
 
     String NFLGAMESINPROGRESS = "https://api.sportsdata.io/v3/nfl/scores/json/AreAnyGamesInProgress?key=a1c6821b242546c180c07e0d1e508670";
-    String NFLODDSWEEK3 = "https://api.sportsdata.io/v3/nfl/odds/json/GameOddsByWeek/2024/3?key=a1c6821b242546c180c07e0d1e508670";
+    String NFLODDSWEEKLY = "https://api.sportsdata.io/v3/nfl/odds/json/GameOddsByWeek/2024/%s?key=a1c6821b242546c180c07e0d1e508670";
 
     String MLBSCHEDULE = "https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/2024-04-16?key=a8798167747e4ea49679b2b92c522c6c";
     String MLBSCHEDULEUSEABLE = String.format("https://api.sportsdata.io/v3/mlb/odds/json/GameOddsByDate/%s?key=a8798167747e4ea49679b2b92c522c6c", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
 
+    public Integer getNFLWeek(){
+        LocalDate specificDate = LocalDate.of(2024, 8, 28);
 
+        // Get the current date
+        LocalDate currentDate = LocalDate.now();
+
+        // Calculate the difference in days
+        long daysDifference = ChronoUnit.DAYS.between(specificDate, currentDate);
+
+        // Calculate the number of weeks
+        long weeksPassed = daysDifference / 7;
+        return (int) weeksPassed;
+    }
     @GetMapping("gambling-api/mlb-schedule")
     public ArrayList<LinkedHashMap> getMLBSchedule(){
         RestTemplate restTemplate = new RestTemplate();
@@ -45,7 +58,8 @@ public class GameController {
     @GetMapping("gambling-api/nfl-schedule")
     public ArrayList<LinkedHashMap> getNFLSchedule(){
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ArrayList> responseEntity = restTemplate.getForEntity(NFLODDSWEEK3, ArrayList.class);
+        Integer week = getNFLWeek();
+        ResponseEntity<ArrayList> responseEntity = restTemplate.getForEntity(String.format(NFLODDSWEEKLY, week), ArrayList.class);
         return Objects.requireNonNull(responseEntity.getBody());
     }
 
@@ -82,6 +96,6 @@ public class GameController {
 
     @GetMapping("health")
     public String health(){
-        return "Healthy";
+        return "Healthy :)";
     }
 }

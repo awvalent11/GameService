@@ -7,3 +7,15 @@ BetRivers, BetMGM, Betway, ClutchBet, Desert Diamond,
 
 -> Apache Kafka for scores and resolving bets 
 
+
+
+
+Path 2 Prod 
+Run Dockerfile
+docker build awvalent7/gameservice:tag .
+
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 637423531283.dkr.ecr.us-east-2.amazonaws.com
+
+docker images
+
+docker tag e9ae3c220b23 aws_account_id.dkr.ecr.region.amazonaws.com/my-repository:tag

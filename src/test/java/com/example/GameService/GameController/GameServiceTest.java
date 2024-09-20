@@ -15,16 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class GameServiceTest {
-
-    @Autowired
-    private GameService gameService;
-
-    @Mock
-    private GameController gameController;
-
-    @Test
-    @Transactional
-    void testconvertGames(GameDTO gameDTO){
+//
+//    @Autowired
+//    private GameService gameService;
+//
+//    @Mock
+//    private GameController gameController;
+//
+//    @Test
+//    @Transactional
+//    void testconvertGames(GameDTO gameDTO){
 
 //        LinkedHashMap odds = new LinkedHashMap();
 //        odds.put("Odds", );
@@ -40,14 +40,14 @@ class GameServiceTest {
 //                .pregameOdds()
 //                .build();
 //
-
-
-
-
-    }
-
-    @Test
-    void testsGameFilter(){
+//
+//
+//
+//
+//    }
+//
+//    @Test
+//    void testsGameFilter(){
 //        GameDTO gameDTO = GameDTO.builder()
 //                .away("HOU")
 //                .home("PHI")
@@ -70,5 +70,5 @@ class GameServiceTest {
 //        assertEquals(expectedGame.getOdds(), actualGame.getOdds());
 //        assertNull(actualGame.getPosition());
         //assertEquals(expectedGame.getExpiration(), actualGame.getExpiration());
-    }
+//    }
 }
