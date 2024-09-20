@@ -12,6 +12,7 @@ public class Odds {
     private Integer homeMoneyLine;
     private Integer awayMoneyLine;
     private String sportsbookUrl;
+    private String sportsBook;
 
     public Odds(Double pointsSpread,
                 Double overUnder,
@@ -27,7 +28,6 @@ public class Odds {
     }
 
 
-    private String sportsBook;
 
     private String getSportsBook(String url) {
         if (sportsbookUrl == null) {

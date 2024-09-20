@@ -31,7 +31,7 @@ public class NFLService {
 //        if they have, settle the bets
     }
 
-    public void getLiveOdds(List<Integer> scoreIds, List<String> sportbooks){
+    private void getLiveOdds(List<Integer> scoreIds, List<String> sportbooks){
 
         for (Integer scoreId : scoreIds) {
             // check if any customers are betting or following that game
