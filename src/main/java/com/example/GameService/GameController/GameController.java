@@ -35,7 +35,7 @@ public class GameController {
 
 
     public Integer getNFLWeek(){
-        LocalDate specificDate = LocalDate.of(2024, 8, 28);
+        LocalDate specificDate = LocalDate.of(2024, 8, 27);
 
         // Get the current date
         LocalDate currentDate = LocalDate.now();

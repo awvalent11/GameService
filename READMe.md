@@ -18,4 +18,6 @@ aws ecr get-login-password --region us-east-2 | docker login --username AWS --pa
 
 docker images
 
-docker tag e9ae3c220b23 aws_account_id.dkr.ecr.region.amazonaws.com/my-repository:tag
+docker tag *local container Image ID* 637423531283.dkr.ecr.region.amazonaws.com/my-repository:tag
+
+docker push 637423531283.dkr.ecr.region.amazonaws.com/my-repository:tag
