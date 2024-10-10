@@ -115,7 +115,7 @@ public class GameService {
     @SneakyThrows
     @PostConstruct
     @Scheduled(cron = "0 35 16 * * ?")
-    //4:38PM every day
+    //4:35PM every day
     // * is every time and 0 is once
     @Transactional
     public void getNFLGamesForWeek(){

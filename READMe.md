@@ -21,3 +21,24 @@ docker images
 docker tag *local container Image ID* 637423531283.dkr.ecr.region.amazonaws.com/my-repository:tag
 
 docker push 637423531283.dkr.ecr.region.amazonaws.com/my-repository:tag
+
+
+*** Updating kubeconfig with proper cert for auth ***
+Add inline policy to IAM role: 
+'allow-all-eks'
+
+{
+ "Version": "2012-10-17",
+ "Statement": [
+    {
+        "Sid": "VisualEditor0",
+        "Effect": "Allow",
+        "Action": "eks:*"
+        "Resource": "*"
+    }
+ ]
+}
+
+aws eks update-kubeconfig --region us-east-2 --name house-cluster
+
+ECR Repository: awvalent11/gameservicenfl

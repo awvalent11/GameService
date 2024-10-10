@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlb-deployment
+  labels:
+    app: mlb-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mlb-app
+  template:
+    metadata:
+      labels:
+        app: mlb-app
+    spec:
+      containers:
+        - name: mlb-container
+          image: 637423531283.dkr.ecr.us-east-2.amazonaws.com/mlb-service:mlb-image-1
+          ports:
+            - containerPort: 81
