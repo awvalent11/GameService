@@ -12,15 +12,15 @@ BetRivers, BetMGM, Betway, ClutchBet, Desert Diamond,
 
 Path 2 Prod 
 Run Dockerfile
-docker build awvalent7/gameservice:tag .
+docker buildx build --platform linux/amd64 -t awvalent11/gameservice:tag .
 
 aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 637423531283.dkr.ecr.us-east-2.amazonaws.com
 
 docker images
 
-docker tag *local container Image ID* 637423531283.dkr.ecr.region.amazonaws.com/my-repository:tag
+docker tag *local container Image ID* 637423531283.dkr.ecr.us-east-2.amazonaws.com/my-repository:tag
 
-docker push 637423531283.dkr.ecr.region.amazonaws.com/my-repository:tag
+docker push 637423531283.dkr.ecr.us-east-2.amazonaws.com/my-repository:tag
 
 
 *** Updating kubeconfig with proper cert for auth ***
