@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: gameservice-ingress
+  rules:
+    - http:
+        paths:
+          - path: /gambling-api/nfl-week-games
+            pathType: Prefix
+            backend:
+              service:
+                name: nfl-service
+                port:
+                  number: 80
