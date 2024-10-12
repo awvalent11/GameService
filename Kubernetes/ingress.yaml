@@ -7,7 +7,8 @@ metadata:
 spec:
   ingressClassName: gameservice-ingress
   rules:
-    - http:
+    - host: "theunhousedbets.com"
+      http:
         paths:
           - path: /gambling-api/nfl-week-games
             pathType: Prefix
