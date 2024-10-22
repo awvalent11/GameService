@@ -42,3 +42,13 @@ Add inline policy to IAM role:
 aws eks update-kubeconfig --region us-east-2 --name house-cluster
 
 ECR Repository: awvalent11/gameservicenfl
+
+
+
+Some Kubernetes stuff: 
+
+Exposing cluster to internet: 
+You need to download an AWS Application LoadBalancer:
+https://docs.aws.amazon.com/eks/latest/userguide/lbc-helm.html
+First, your cluster needs an OIDC provider:
+https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html

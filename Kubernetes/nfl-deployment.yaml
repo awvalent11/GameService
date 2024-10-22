@@ -2,21 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nfl-deployment
+  namespace: workshop
   labels:
-    app: nfl-app
+    app: nfl
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nfl-app
+      app: nfl
   template:
     metadata:
       labels:
-        app: nfl-app
+        app: nfl
     spec:
       containers:
         - name: nfl-container
           # The $REPOSITORY_URI and $IMAGE_TAG placeholders will be replaced by actual values supplied by the build action in your workflow
           image: 637423531283.dkr.ecr.us-east-2.amazonaws.com/awvalent11/gameservice:0.3.0
           ports:
-            - containerPort: 80
+            - containerPort: 81
