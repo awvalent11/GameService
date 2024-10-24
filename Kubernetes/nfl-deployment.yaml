@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nfl-deployment
-  namespace: workshop
+  name: nfl
+  namespace: game-2048
   labels:
     app: nfl
 spec:
@@ -12,12 +12,15 @@ spec:
       app: nfl
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/stats/prometheus'
       labels:
         app: nfl
     spec:
       containers:
-        - name: nfl-container
+        - name: nfl
           # The $REPOSITORY_URI and $IMAGE_TAG placeholders will be replaced by actual values supplied by the build action in your workflow
           image: 637423531283.dkr.ecr.us-east-2.amazonaws.com/awvalent11/gameservice:0.3.0
           ports:
-            - containerPort: 81
+            - containerPort: 80

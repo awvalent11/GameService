@@ -2,13 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nfl
-  namespace: workshop
+  namespace: game-2048
   labels:
     app: nfl
 spec:
   selector:
     app: nfl
   ports:
-    - name: "http"
-      port: 81
-      targetPort: 81
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort

@@ -48,7 +48,24 @@ ECR Repository: awvalent11/gameservicenfl
 Some Kubernetes stuff: 
 
 Exposing cluster to internet: 
+Add the elasticLoadbalancing:DescribeLoadBalancers permission to your EC2 nodes. 
+-> Navigate to your Node Group, find "Node IAM role ARN" under the "details" tab
+-> Click "View in IAM" -> Add permissions -> either do AmazonEC2FullAccess or be more granular with a custom rule:
+{
+        "Version": "2012-10-17",
+        "Statement": [
+        {
+        "Effect": "Allow",
+        "Action": [
+        "elasticloadbalancing:DescribeLoadBalancers"
+        ],
+        "Resource": "*"
+        }
+    ]
+}
 You need to download an AWS Application LoadBalancer:
 https://docs.aws.amazon.com/eks/latest/userguide/lbc-helm.html
 First, your cluster needs an OIDC provider:
 https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html
+Then you need to configure the Ingress and Application Load Balancer resources
+https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html
