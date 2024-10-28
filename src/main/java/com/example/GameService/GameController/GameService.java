@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,6 +48,9 @@ public class GameService {
             try {
                 returnedGame.setHome(game.getHomeTeamName());
                 returnedGame.setAway(game.getAwayTeamName());
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd'T'HH:mm");
+//                LocalDate startTime = LocalDate.parse((game.getDateTime()), formatter);
+                returnedGame.setStartTime(game.getDateTime());
                 Boolean gameStatus = parseStatus(game.getStatus());
                 returnedGame.setStatus(gameStatus);
                 Odds pregameOdds = new Odds( (Double) odds.get("HomePointSpread"),
@@ -78,10 +83,10 @@ public class GameService {
                 gameDTO.setGameId((Integer) game.get("GameId"));
                 gameDTO.setAwayTeamName((String) game.get("AwayTeamName"));
                 gameDTO.setHomeTeamName((String) game.get("HomeTeamName"));
+                gameDTO.setDateTime((String) game.get("DateTime"));
                 gameDTO.setStatus((String) game.get("Status"));
                 gameDTO.setPregameOdds((List<LinkedHashMap>) game.get("PregameOdds"));
                 gameList.add(gameDTO);
-
 
             }catch (Error err){
                 logger.info(err.toString());

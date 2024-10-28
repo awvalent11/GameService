@@ -21,7 +21,7 @@ public class Game {
     private String home;
     private String away;
     private List<Odds> odds;
-   // private LocalDate startTime;
+    private String startTime;
    // private Double payoff;
    // private Double position;
     private Boolean status;

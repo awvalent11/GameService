@@ -34,7 +34,7 @@ public class GameDTO {
 //    private String season;
 //    private String seasonType;
 //    private String day;
-//    private String dateTime;
+    private String dateTime;
     private String status;
 //    private String awayTeamId;
 //    private String homeTeamId;
