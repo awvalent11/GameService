@@ -46,10 +46,9 @@ public class GameService {
 
         for(LinkedHashMap odds: game.getPregameOdds()){
             try {
+                returnedGame.setId(game.getGameId());
                 returnedGame.setHome(game.getHomeTeamName());
                 returnedGame.setAway(game.getAwayTeamName());
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd'T'HH:mm");
-//                LocalDate startTime = LocalDate.parse((game.getDateTime()), formatter);
                 returnedGame.setStartTime(game.getDateTime());
                 Boolean gameStatus = parseStatus(game.getStatus());
                 returnedGame.setStatus(gameStatus);
@@ -74,19 +73,19 @@ public class GameService {
         return aPistatus.equals("Final");
     }
 
-    private List<GameDTO> parseGame(ArrayList<LinkedHashMap> games) throws NullPointerException {
+    public List<GameDTO> parseGame(ArrayList<LinkedHashMap> games) throws NullPointerException {
         List<GameDTO> gameList = new ArrayList<>();
         for(LinkedHashMap game : games) {
             try {
                 System.out.println(String.format("I am a game! %s", game));
-                GameDTO gameDTO = GameDTO.builder().build();
-                gameDTO.setGameId((Integer) game.get("GameId"));
-                gameDTO.setAwayTeamName((String) game.get("AwayTeamName"));
-                gameDTO.setHomeTeamName((String) game.get("HomeTeamName"));
-                gameDTO.setDateTime((String) game.get("DateTime"));
-                gameDTO.setStatus((String) game.get("Status"));
-                gameDTO.setPregameOdds((List<LinkedHashMap>) game.get("PregameOdds"));
-                gameList.add(gameDTO);
+//                GameDTO gameDTO = GameDTO.builder().build();
+//                gameDTO.setGameId((Integer) game.get("GameId"));
+//                gameDTO.setAwayTeamName((String) game.get("AwayTeamName"));
+//                gameDTO.setHomeTeamName((String) game.get("HomeTeamName"));
+//                gameDTO.setDateTime((String) game.get("DateTime"));
+//                gameDTO.setStatus((String) game.get("Status"));
+//                gameDTO.setPregameOdds((List<LinkedHashMap>) game.get("PregameOdds"));
+//                gameList.add(gameDTO);
 
             }catch (Error err){
                 logger.info(err.toString());

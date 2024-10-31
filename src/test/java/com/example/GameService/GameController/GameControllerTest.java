@@ -144,20 +144,10 @@ class GameControllerTest {
 
     @Test
     void getNFLTodayGames() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/gambling-api/nfl-week-games"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/gambling-api/nfl-week-games"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].size()").value(6))
-                .andExpect(jsonPath("$[0]").isNumber())
-                .andExpect(jsonPath("$[3]").hasJsonPath());
-
-
-
-        MvcResult result;
-        result = mockMvc.perform(MockMvcRequestBuilders.
-                        get("/gambling-api/nfl-week-games")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andReturn();
+                .andExpect(jsonPath("$[3]").hasJsonPath()).andReturn();
 
         List resultList = objectMapper.readValue(result.getResponse().getContentAsString(), List.class);
         assertTrue(isInClosedRange(resultList.size()));

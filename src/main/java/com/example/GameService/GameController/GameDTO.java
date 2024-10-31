@@ -31,23 +31,23 @@ public class GameDTO {
 
 
     private Integer gameId;
-//    private String season;
-//    private String seasonType;
-//    private String day;
+    private String season;
+    private String seasonType;
+    private String day;
     private String dateTime;
     private String status;
-//    private String awayTeamId;
-//    private String homeTeamId;
+    private String awayTeamId;
+    private String homeTeamId;
     private String awayTeamName;
     private String homeTeamName;
-//    private String globalGameId;
-//    private String globalAwayTeamId;
-//    private String globalHomeTeamId;
-//    private String homeTeamScore;
-//    private String awayTeamScore;
-//    private String totalScore;
-//    private String homeRotationNumber;
-//    private String AwayRotationNumber;
+    private String globalGameId;
+    private String globalAwayTeamId;
+    private String globalHomeTeamId;
+    private String homeTeamScore;
+    private String awayTeamScore;
+    private String totalScore;
+    private String homeRotationNumber;
+    private String AwayRotationNumber;
     private List<LinkedHashMap> pregameOdds;
 
 }

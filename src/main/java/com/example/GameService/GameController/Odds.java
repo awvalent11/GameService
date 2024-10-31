@@ -3,6 +3,7 @@ package com.example.GameService.GameController;
 
 import lombok.*;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter

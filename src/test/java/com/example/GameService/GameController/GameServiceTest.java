@@ -1,6 +1,7 @@
 package com.example.GameService.GameController;
 
 import jakarta.transaction.Transactional;
+import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -10,21 +11,56 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class GameServiceTest {
 
-//    @Autowired
-//    private GameService gameService;
-//
-//    @Mock
-//    private GameController gameController;
-//
-//
-//    GameDTO gameDTO = new GameDTO(
-//        "ScoreId": 18776,
+    @Autowired
+    private GameService gameService;
+
+    @Mock
+    private GameController gameController;
+
+    Odds exampleOdds = new Odds(
+            8.0,
+            45.5,
+            200,
+            -100,
+            "test_sportsbook/url",
+            "test_sportsbook"
+    );
+
+    LinkedHashMap testOdds = new LinkedHashMap((Map) exampleOdds);
+
+    GameDTO exampleGameDTO = new GameDTO(
+            1,
+            "2024",
+             "1",
+            "8",
+            "2024-10-28T00:00:00",
+            "2024-10-28T20:15:00",
+            "Scheduled",
+            "23",
+            "28",
+            "NYG",
+            "PIT",
+            "1",
+            "23",
+            "28",
+            null,
+            null,
+            "0",
+             "417",
+            List.of(testOdds)
+
+    );
+
+
+//    LinkedHashMap exampleGame = new LinkedHashMap(
+//            "id":18776,
 //            "Season": 2024,
 //            "SeasonType": 1,
 //            "Week": 8,
@@ -89,30 +125,28 @@ class GameServiceTest {
 //                "GameId": 18776,
 //                "Unlisted": null
 //        });
-//
-//    @Test
-//    @Transactional
-//    void testconvertGames(GameDTO gameDTO){
-//
-//        LinkedHashMap odds = new LinkedHashMap();
-//        odds.put("Odds", );
-//
-//        List<LinkedHashMap> pregameOdds = new ArrayList<>();
-//        pregameOdds.add()
-//
-//        GameDTO gameDTO = GameDTO.builder()
-//                .gameId(1)
-//                .status("Scheduled")
-//                .homeTeamName("HOU")
-//                .awayTeamName("PHI")
-//                .pregameOdds()
-//                .build();
-//
-//
-//
-//
-//
-//    }
+
+
+    @Test
+    @Transactional
+    void parseGames(){
+        ArrayList<GameDTO> gameDTOs = new ArrayList<>();
+        gameDTOs.add(exampleGameDTO);
+        gameService.parseGame(gameDTOs);
+
+    }
+
+    @Test
+    @Transactional
+    void convertGames(){
+
+    }
+
+    @Test
+    @Transactional
+    void assignNFLGames(){
+
+    }
 //
 //    @Test
 //    void testsGameFilter(){
